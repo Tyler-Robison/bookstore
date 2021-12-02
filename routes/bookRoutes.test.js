@@ -183,6 +183,32 @@ describe("Book Routes Test", function () {
             });
         });
 
+        test("Can partial update book", async function () {
+            const data = {
+                publisher: "new pub",
+                title: "new title",
+                year: 2015
+            }
+
+            let response = await request(app)
+                .put("/books/0691161518")
+                .send(data);
+
+            expect(response.statusCode).toEqual(200);
+            expect(response.body).toEqual({
+                "book": {
+                    isbn: "0691161518",
+                    amazon_url: "http://a.co/eobPtX2",
+                    author: "Matthew Lane",
+                    language: "english",
+                    pages: 264,
+                    publisher: "new pub",
+                    title: "new title",
+                    year: 2015
+                }
+            });
+        });
+
         test("404 on bad isbn", async function () {
             const data = {
                 amazon_url: "http://a.co/eobPtX2",
